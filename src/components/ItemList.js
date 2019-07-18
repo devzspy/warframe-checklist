@@ -32,7 +32,12 @@ class ItemList extends Component {
     let researched = this.props.list.list.filter((item) => {
       return item.researched;
     }).length;
-    return <div>{acquired}/{total} Acquired | {rankThirty}/{total} Rank 30 | {researched}/{researchTotal} Researched</div>;
+    if (this.props.list.title === "Helmet Skins" ) {
+      return <div>{acquired}/{total} Acquired | {rankThirty}/{total} Owned</div>;
+    }
+    else {
+      return <div>{acquired}/{total} Acquired | {rankThirty}/{total} Rank 30 | {researched}/{researchTotal} Researched</div>;
+    }
   }
 
   itemList = (items) => {
@@ -66,39 +71,76 @@ class ItemList extends Component {
       });
     }
 
-    return (
-      <div>
-        <h3>{this.props.list.title}</h3>
-        {this.progress()}
-        <div className="toggleButton"><button className="showHide" onClick={this.toggleShow} >Show/Hide</button></div>
-        <hr />
-        {
-          this.state.showList ?
-          <table>
-            <colgroup>
-              <col className="itemTitle" />
-              <col className="itemCheckbox" />
-              <col className="itemCheckbox" />
-              <col className="itemCheckbox" />
-              <col className="itemAcquisition" />
-            </colgroup>
-            <thead>
-              <tr>
-                <th>Item</th>
-                <th className="itemCheckbox">Acquired(<span className="tooltip" title="Check this box when your have finished fabricating the item of have aquired it by other means">?</span>)</th>
-                <th className="itemCheckbox">Rank 30</th>
-                <th className="itemCheckbox">Researched(<span className="tooltip" title="Check this when your clan has finished researching the item">?</span>)</th>
-                {this.acquisitionColumns()}
-              </tr>
-            </thead>
-            <tbody>
-              {this.itemList(items)}
-            </tbody>
-          </table>:
-          null
-        }
-      </div>
-    );
+    if (this.props.list.title === "Helmet Skins") {
+      return (
+        <div>
+          <h3>{this.props.list.title}</h3>
+          {this.progress()}
+          <div className="toggleButton"><button className="showHide" onClick={this.toggleShow} >Show/Hide</button></div>
+          <hr />
+          {
+            this.state.showList ?
+            <table>
+              <colgroup>
+                <col className="itemTitle" />
+                <col className="itemCheckbox" />
+                <col className="itemCheckbox" />
+                <col className="itemCheckbox" />
+                <col className="itemAcquisition" />
+              </colgroup>
+              <thead>
+                <tr>
+                  <th>Item</th>
+                  <th className="itemCheckbox">Acquired(<span className="tooltip" title="Check this box when your have finished fabricating the item of have aquired it by other means">?</span>)</th>
+                  <th className="itemCheckbox">Owned</th>
+                  <th></th>
+                  {this.acquisitionColumns()}
+                </tr>
+              </thead>
+              <tbody>
+                {this.itemList(items)}
+              </tbody>
+            </table>:
+            null
+          }
+        </div>
+      );
+    }
+    else {
+      return (
+        <div>
+          <h3>{this.props.list.title}</h3>
+          {this.progress()}
+          <div className="toggleButton"><button className="showHide" onClick={this.toggleShow} >Show/Hide</button></div>
+          <hr />
+          {
+            this.state.showList ?
+            <table>
+              <colgroup>
+                <col className="itemTitle" />
+                <col className="itemCheckbox" />
+                <col className="itemCheckbox" />
+                <col className="itemCheckbox" />
+                <col className="itemAcquisition" />
+              </colgroup>
+              <thead>
+                <tr>
+                  <th>Item</th>
+                  <th className="itemCheckbox">Acquired(<span className="tooltip" title="Check this box when your have finished fabricating the item of have aquired it by other means">?</span>)</th>
+                  <th className="itemCheckbox">Rank 30</th>
+                  <th className="itemCheckbox">Researched(<span className="tooltip" title="Check this when your clan has finished researching the item">?</span>)</th>
+                  {this.acquisitionColumns()}
+                </tr>
+              </thead>
+              <tbody>
+                {this.itemList(items)}
+              </tbody>
+            </table>:
+            null
+          }
+        </div>
+      );
+    }
   }
 }
 
